@@ -1005,19 +1005,51 @@ a:focus {
   color: inherit;
 }
 
- /* Estilos para a caixa flutuante */
- #caixa-flutuante {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #fff;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  display: none; /* Inicialmente oculto */
-  max-height: 200px; /* Altura máxima da caixa do carrinho */
-  overflow-y: auto; /* Adiciona uma barra de rolagem vertical quando necessário */
+/* Estilos para a animação de aperto */
+@keyframes squeeze {
+  0% {
+      transform: scale(1); /* Tamanho normal */
+  }
+  50% {
+      transform: scale(0.9); /* Reduz o tamanho em 10% */
+  }
+  100% {
+      transform: scale(1); /* Retorna ao tamanho normal */
+  }
 }
+
+#aba-arrastar {
+  width: 100%;
+  height: 5px;
+  background-color: #007bff;
+  cursor: move;
+}
+
+#caixa-flutuante {
+  position: fixed;
+  top: 50px; /* Altura inicial da barra de título */
+  left: 50px;
+  width: 200px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  z-index: 1000;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para o botão de finalizar compra */
+#caixa-flutuante button {
+  /*float: right; /* Alinha o botão à direita */
+  margin-top: 10px; /* Adiciona um espaçamento entre o botão e o total */
+  animation: none; 
+  display: block; /* Torna o botão um bloco para alinhar ao centro */
+  margin: 0 auto; /* Define margens automáticas para centralizar horizontalmente */
+
+}
+/* Estilos para o botão de finalizar compra ao passar o mouse */
+#caixa-flutuante button:active  {
+  animation: squeeze 0.3s ease; 
+}
+
 
 /* Estilos para a lista de itens do carrinho */
 #lista-carrinho {
@@ -1028,14 +1060,82 @@ a:focus {
 
 /* Estilos para os itens do carrinho */
 .item-carrinho {
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.item-carrinho span {
+  margin-right: 10px; /* Adiciona espaçamento entre os elementos */
 }
 
 /* Estilos para o botão de remover */
-.btn-remover {
-  margin-left: 5px;
-  cursor: pointer;
+   /* Estilos para o botão de remover */
+   .btn-remover {
+    margin-left: auto; /* Alinhar à direita */
+    cursor: pointer;
+    color: red; /* Cor vermelha */
+    font-weight: bold;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+}
+
+.modal-conteudo {
+  text-align: center;
+}
+
+#observacoes {
+  width: 100%;
+  height: 100px;
+  margin-top: 10px;
+}
+
+#texto-orientacoes {
+  color: #999;
+}
+
+/* Estilo para o container do formulário */
+#enderecoEntrega {
+  display: none;
+  max-width: 400px; /* Define a largura máxima do formulário */
+  margin: 0 auto; /* Centraliza o formulário na página */
+}
+
+/* Estilo para as linhas */
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Espaçamento entre as linhas */
+}
+
+/* Estilo para as etiquetas */
+.row label {
+  width: 100px; /* Largura fixa para as etiquetas */
+  margin-right: 10px; /* Espaçamento entre a etiqueta e o campo de entrada */
+}
+
+/* Estilo para os campos de entrada */
+.row input[type="text"] {
+  flex: 1; /* Ocupa todo o espaço disponível na linha */
+}
+
+/* Estilo específico para o campo de número */
+#numero {
+  max-width: 50px; /* Define a largura máxima do campo de número */
+  margin-left: 10px; /* Espaçamento entre o campo de rua e o campo de número */
 }
 /*# sourceMappingURL=style.css.map */

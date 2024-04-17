@@ -705,9 +705,53 @@
   <!-- footer section -->
   <!--Elementos flutuantes-->
    <!-- Caixa flutuante para exibir o valor total do carrinho -->
-   <div id="caixa-flutuante">
+   <div id="caixa-flutuante" style="display: none;">
+    <div id="aba-arrastar"></div>
     <ul id="lista-carrinho"></ul>
     <p id="total-carrinho">Total: R$0,00</p>
+    <button onclick="mostrarModal()">Finalizar Compra</button>
+</div>
+<!-- Adicione o modal -->
+<div id="modal" class="modal">
+  <div class="modal-conteudo">
+      <h2>Revisar Pedido</h2>
+      <div id="pedido-completo"></div>
+      
+      <!-- Opções de retirada ou entrega -->
+      <div>
+        <input type="radio" id="retirada" name="opcaoEntrega" value="retirada" checked>
+        <label for="retirada">Retirada</label>
+    </div>
+    <div>
+        <input type="radio" id="entrega" name="opcaoEntrega" value="entrega">
+        <label for="entrega">Entrega</label>
+    </div>
+    
+    <!-- Campo de endereço para entrega -->
+    <div id="enderecoEntrega" style="display: none;">
+        <div class="row">
+            <label for="rua">Rua:</label>
+            <input type="text" id="rua" name="rua" placeholder="Rua">
+            <label for="numero">Número:</label>
+            <input type="text" id="numero" name="numero" placeholder="123">
+        </div>
+        <div class="row">
+            <label for="bairro">Bairro:</label>
+            <input type="text" id="bairro" name="bairro" placeholder="Bairro">
+            <label for="complemento">Complemento:</label>
+            <input type="text" id="complemento" name="complemento" placeholder="Complemento">
+        </div>
+        <!-- Adicione outros campos de endereço conforme necessário -->
+    </div>
+    
+    
+    <!-- Campo de observações -->
+    <label for="observacoes">Observações:</label>
+    <textarea id="observacoes" placeholder="Deixe seu pedido do jeitinho que você gosta! Use este espaço para nos contar suas preferências, como o ponto da carne, retirada de ingredientes ou qualquer outra observação especial."></textarea>
+    
+      <!-- Botão para enviar o pedido -->
+      <button onclick="finalizarCompra()">Enviar Pedido</button>
+  </div>
 </div>
   <!-- jQery -->
   <script src="js/jquery-3.4.1.min.js"></script>
