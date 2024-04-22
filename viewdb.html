@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados do Banco de Dados</title>
+</head>
+<body>
+    <h1>Dados do Banco de Dados</h1>
+    <div id="dados-container"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            $.get("/dados", (data) => {
+                const dadosContainer = $("#dados-container");
+                if (data.length === 0) {
+                    dadosContainer.append("<p>Nenhum dado encontrado.</p>");
+                } else {
+                    const table = $("<table>").appendTo(dadosContainer);
+                    const headerRow = $("<tr>").appendTo(table);
+                    Object.keys(data[0]).forEach((key) => {
+                        $("<th>").text(key).appendTo(headerRow);
+                    });
+                    data.forEach((pedido) => {
+                        const dataRow = $("<tr>").appendTo(table);
+                        // Modifique esta parte para acessar os itens do carrinho corretamente
+                        const itensCarrinho = pedido.itensCarrinho;
+                        Object.keys(pedido).forEach((key) => {
+                            if (key === "itensCarrinho") {
+                                // Se a chave for "itensCarrinho", adicione uma coluna com os itens do carrinho
+                                const itensCarrinhoCell = $("<td>").appendTo(dataRow);
+                                itensCarrinho.forEach((item) => {
+                                    $("<p>").text(`${item.quantidade} ${item.nomeProduto} - ${item.precoProduto}`).appendTo(itensCarrinhoCell);
+                                });
+                            } else {
+                                // Adicione outras colunas normalmente
+                                $("<td>").text(pedido[key]).appendTo(dataRow);
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>

@@ -261,53 +261,44 @@ function iniciarArrasto(e) {
 }
 
 function finalizarCompra() {
-    // Número de telefone para enviar o pedido pelo WhatsApp
-    var numeroWhatsApp = "5541984756991"; // Substitua pelo número de telefone desejado, incluindo o código do país
-
-    // Mensagem inicial
-    var mensagem = "Olá! Gostaria de fazer um pedido:\n\n";
-
-    // Verifica se o pedido é para retirada ou entrega
-    var tipoPedido = document.querySelector('input[name="opcaoEntrega"]:checked').value;
-
-    if (tipoPedido === "retirada") {
-        mensagem += "Para retirada:\n";
-    } else if (tipoPedido === "entrega") {
-        // Adiciona o endereço de entrega à mensagem
-        var rua = document.getElementById("rua").value;
-        var numero = document.getElementById("numero").value;
-        var bairro = document.getElementById("bairro").value;
-        var complemento = document.getElementById("complemento").value;
-
-        mensagem += "Para entrega:\n\n";
-        mensagem += "Endereço: " + rua + ", " + numero + " - " + bairro + "\n";
-        mensagem += "Complemento: " + complemento + "\n\n";
+        var pedido = {
+            tipoEntrega: document.querySelector('input[name="opcaoEntrega"]:checked').value,
+            endereco: {
+                rua: document.getElementById("rua").value,
+                numero: document.getElementById("numero").value,
+                bairro: document.getElementById("bairro").value,
+                complemento: document.getElementById("complemento").value
+            },
+            itensCarrinho: [],
+            total: document.getElementById("total-carrinho").textContent,
+            observacoes: document.getElementById("observacoes").value
+        };
+    
+        var listaCarrinho = document.querySelectorAll("#lista-carrinho .item-carrinho");
+        listaCarrinho.forEach(function(item) {
+            var quantidade = item.querySelector("span:nth-child(1)").textContent;
+            var nomeProduto = item.querySelector("span:nth-child(2)").textContent;
+            var precoProduto = item.querySelector("span:nth-child(3)").textContent;
+            pedido.itensCarrinho.push({ quantidade, nomeProduto, precoProduto });
+        });
+    
+        // Enviar o pedido para o backend
+        enviarPedidoParaBackend(pedido);
     }
+    
+    function enviarPedidoParaBackend(pedido) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:3000/enviar-pedido", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("Pedido enviado com sucesso!");
+            }
+        };
+        xhr.send(JSON.stringify(pedido));
+    }
+    
 
-    // Adiciona os itens do carrinho à mensagem
-    var listaCarrinho = document.querySelectorAll("#lista-carrinho .item-carrinho");
-    listaCarrinho.forEach(function(item) {
-        var quantidade = item.querySelector("span:nth-child(1)").textContent;
-        var nomeProduto = item.querySelector("span:nth-child(2)").textContent;
-        var precoProduto = item.querySelector("span:nth-child(3)").textContent;
-        mensagem += quantidade + " " + nomeProduto + " - " + precoProduto + "\n";
-    });
-
-    // Adiciona o total do carrinho à mensagem
-    var totalCarrinho = document.getElementById("total-carrinho").textContent;
-    mensagem += "\n" + totalCarrinho + "\n\n";
-    var observacoes = document.getElementById("observacoes").value;
-    mensagem +="Observações: " + observacoes;
-
-    // Codificar a mensagem para usar no link do WhatsApp
-    var mensagemCodificada = encodeURIComponent(mensagem);
-
-    // Construir o link do WhatsApp com o número de telefone e a mensagem
-    var linkWhatsApp = "https://wa.me/" + numeroWhatsApp + "?text=" + mensagemCodificada;
-
-    // Redirecionar para o link do WhatsApp
-    window.location.href = linkWhatsApp;
-}
 
 
 
