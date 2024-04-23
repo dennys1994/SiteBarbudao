@@ -25,7 +25,8 @@ const db = new sqlite3.Database("pedidos.db", (err) => {
         db.run(`CREATE TABLE IF NOT EXISTS pedidos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            endereco_entrega TEXT
+            endereco_entrega TEXT,
+            observacoes_pedido TEXT
         )`, (err) => {
             if (err) {
                 console.error("Erro ao criar a tabela pedidos", err.message);
@@ -66,10 +67,13 @@ app.options("/enviar-pedido", (req, res) => {
 app.post("/enviar-pedido", (req, res) => {
     const pedido = req.body;
 
+    // Extrair elementos individuais do objeto endereco
+    const { rua, numero, bairro, complemento } = pedido.endereco;
+
     // Inserir informações gerais do pedido na tabela de pedidos (orders)
     db.run(
-        'INSERT INTO pedidos (endereco_entrega) VALUES (?)',
-        [pedido.endereco],
+        'INSERT INTO pedidos (endereco_entrega, observacoes_pedido) VALUES (?, ?)',
+        [`${rua}, ${numero}, ${bairro}, ${complemento}`, pedido.observacoes],
         function (err) {
             if (err) {
                 console.error("Erro ao inserir o pedido no banco de dados", err.message);
@@ -101,6 +105,7 @@ app.post("/enviar-pedido", (req, res) => {
         }
     );
 });
+
 
 
 

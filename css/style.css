@@ -1139,3 +1139,137 @@ a:focus {
   margin-left: 10px; /* Espaçamento entre o campo de rua e o campo de número */
 }
 /*# sourceMappingURL=style.css.map */
+
+/* Estilo para a caixa flutuante do carrinho de compras */
+#caixa-flutuante {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: none;
+  z-index: 1000;
+  width: 300px; 
+  max-height: 400px; 
+  overflow-y: auto; 
+}
+
+/* Estilo para a aba de arrastar */
+#aba-arrastar {
+  height: 10px;
+  background-color: #212529; 
+  cursor: move;
+  margin-bottom: 5px;
+}
+
+/* Estilo para a lista de itens do carrinho */
+#lista-carrinho {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #ccc;
+}
+
+#lista-carrinho li {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Open Sans';
+  color: #000000;
+  font-weight: bold;
+  font-size: 11px; 
+}
+
+#total-carrinho {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #333; 
+}
+
+button {
+  background-color: #ffc107; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s; 
+}
+
+button:hover {
+  background-color: rgb(212, 149, 11); 
+}
+
+.preco-item {
+  color: #000000; 
+}
+
+.btn-remover {
+  background-color: #ff6666; 
+  color: white; 
+  padding: 3px 6px; 
+  border-radius: 50%; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+  font-weight: bold; 
+  border: 2px solid transparent; 
+  box-sizing: border-box; 
+}
+
+.btn-remover:hover {
+  background-color: #cc0000; 
+}
+
+.btn-remover-x {
+  font-family: "Open Sans";
+}
+
+.preco {
+  color: #029c42; 
+}
+
+.quantidade {
+  color: rgb(100, 68, 0);
+}
+
+/* Estilo para o modal de pedido feito com sucesso */
+#modalPedidoSucesso {
+  display: none;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#modalPedidoSucesso .modal-conteudo {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+#modalPedidoSucesso h2 {
+  margin-bottom: 15px; /* Espaçamento abaixo do título */
+}
+
+#modalPedidoSucesso p {
+  margin-bottom: 20px; /* Espaçamento abaixo do parágrafo */
+}
+
+#modalPedidoSucesso button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+}
