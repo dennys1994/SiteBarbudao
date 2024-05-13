@@ -72,8 +72,8 @@ $(".client_owl-carousel").owlCarousel({
 
 // Adicione um evento de clique aos ícones SVG com a classe "add-to-cart"
 var addToCartButtons = document.querySelectorAll(".add-to-cart");
-addToCartButtons.forEach(function (button) {
-    button.addEventListener("click", function (event) {
+addToCartButtons.forEach(function(button) {
+    button.addEventListener("click", function(event) {
         event.preventDefault(); // Previne o comportamento padrão do link (redirecionamento)
 
         // Obtenha os detalhes do produto correspondente ao ícone SVG clicado
@@ -88,7 +88,7 @@ addToCartButtons.forEach(function (button) {
 // Variável para armazenar o total
 var totalCarrinho = 0;
 
-window.onload = function () {
+window.onload = function() {
     if (totalCarrinho === 0) {
         document.getElementById("caixa-flutuante").style.display = "none";
     }
@@ -115,14 +115,12 @@ function adicionarProdutoAoCarrinho(nomeProduto, precoProduto) {
 }
 
 // Objeto para armazenar os itens no carrinho
-const carrinho = {
-    itensCarrinho: []
-  };
+const carrinho = {};
 
 // Função para adicionar o item à lista do carrinho
 function adicionarItemAoCarrinho(nomeProduto, precoProduto) {
-    // Exiba a caixa flutuante se o total for maior que zero
-    if (totalCarrinho > 0) {
+      // Exiba a caixa flutuante se o total for maior que zero
+      if (totalCarrinho > 0) {
         document.getElementById("caixa-flutuante").style.display = "block";
     }
     // Verifica se o produto já está no carrinho
@@ -188,8 +186,8 @@ function atualizarCarrinho() {
 
     // Percorra cada item no carrinho
     for (const nomeProduto in carrinho) {
-        if (carrinho.hasOwnProperty(nomeProduto) && nomeProduto !== 'itensCarrinho') {
-            // Crie um novo item de lista apenas para produtos reais
+        if (carrinho.hasOwnProperty(nomeProduto)) {
+            // Crie um novo item de lista
             var listItem = document.createElement("li");
             listItem.className = "item-carrinho";
 
@@ -199,7 +197,7 @@ function atualizarCarrinho() {
 
             // Conteúdo do item de lista (nome do produto, quantidade, preço e botão de remover)
             listItem.innerHTML = `
-                <span class="quantidade">${quantidadeProduto} und</span>
+            <span class="quantidade">${quantidadeProduto} und</span>
                 <span>${nomeProduto}</span>
                 <span class="preco">${precoProduto}</span>
                 <span class="btn-remover btn-remover-x" onclick="removerItemDoCarrinho(this)">X</span>
@@ -210,7 +208,6 @@ function atualizarCarrinho() {
         }
     }
 }
-
 
 
 // Função para atualizar a exibição do total do carrinho
@@ -264,70 +261,43 @@ function iniciarArrasto(e) {
 }
 
 function finalizarCompra() {
-    var pedido = {
-        tipoEntrega: document.querySelector('input[name="opcaoEntrega"]:checked').value,
-        endereco: {
-            rua: document.getElementById("rua").value,
-            numero: document.getElementById("numero").value,
-            bairro: document.getElementById("bairro").value,
-            complemento: document.getElementById("complemento").value
-        },
-        itensCarrinho: [],
-        total: document.getElementById("total-carrinho").textContent,
-        observacoes: document.getElementById("observacoes").value
-    };
-
-    var listaCarrinho = document.querySelectorAll("#lista-carrinho .item-carrinho");
-    listaCarrinho.forEach(function (item) {
-        var quantidade = item.querySelector("span:nth-child(1)").textContent;
-        var nomeProduto = item.querySelector("span:nth-child(2)").textContent;
-        var precoProduto = item.querySelector("span:nth-child(3)").textContent;
-        pedido.itensCarrinho.push({ quantidade, nomeProduto, precoProduto });
-    });
-
-    // Enviar o pedido para o backend
-    enviarPedidoParaBackend(pedido);
-
-    limparCarrinho();
-
-    esconderModal();
-
-    mostrarModalPedidoSucesso();
-
-}
-
-// Função para limpar o carrinho
-function limparCarrinho() {
-    // Limpa o carrinho
-    for (const nomeProduto in carrinho) {
-        delete carrinho[nomeProduto];
+        var pedido = {
+            tipoEntrega: document.querySelector('input[name="opcaoEntrega"]:checked').value,
+            endereco: {
+                rua: document.getElementById("rua").value,
+                numero: document.getElementById("numero").value,
+                bairro: document.getElementById("bairro").value,
+                complemento: document.getElementById("complemento").value
+            },
+            itensCarrinho: [],
+            total: document.getElementById("total-carrinho").textContent,
+            observacoes: document.getElementById("observacoes").value
+        };
+    
+        var listaCarrinho = document.querySelectorAll("#lista-carrinho .item-carrinho");
+        listaCarrinho.forEach(function(item) {
+            var quantidade = item.querySelector("span:nth-child(1)").textContent;
+            var nomeProduto = item.querySelector("span:nth-child(2)").textContent;
+            var precoProduto = item.querySelector("span:nth-child(3)").textContent;
+            pedido.itensCarrinho.push({ quantidade, nomeProduto, precoProduto });
+        });
+    
+        // Enviar o pedido para o backend
+        enviarPedidoParaBackend(pedido);
     }
-
-    // Atualiza a exibição do carrinho
-    atualizarCarrinho();
-
-    // Reseta o total do carrinho para zero
-    totalCarrinho = 0;
-
-    // Atualiza a exibição do total do carrinho
-    atualizarTotalCarrinho();
-
-    // Oculta a caixa flutuante
-    document.getElementById("caixa-flutuante").style.display = "none";
-}
-
-function enviarPedidoParaBackend(pedido) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:3000/enviar-pedido", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log("Pedido enviado com sucesso!");
-        }
-    };
-    xhr.send(JSON.stringify(pedido));
-}
-
+    
+    function enviarPedidoParaBackend(pedido) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:3000/enviar-pedido", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("Pedido enviado com sucesso!");
+            }
+        };
+        xhr.send(JSON.stringify(pedido));
+    }
+    
 
 
 
@@ -336,77 +306,59 @@ function enviarPedidoParaBackend(pedido) {
 function obterPedidoCompleto() {
     var pedido = "";
     var listaCarrinho = document.querySelectorAll("#lista-carrinho .item-carrinho");
-    listaCarrinho.forEach(function (item) {
-        var quantidade = item.querySelector("span:nth-child(1)").textContent;
-        var nomeProduto = item.querySelector("span:nth-child(2)").textContent;
-        var precoProduto = item.querySelector("span:nth-child(3)").textContent;
-
-        pedido += quantidade + " " + nomeProduto + " - " + precoProduto + "\n";
+    listaCarrinho.forEach(function(item) {
+     var quantidade = item.querySelector("span:nth-child(1)").textContent;
+      var nomeProduto = item.querySelector("span:nth-child(2)").textContent;
+      var precoProduto = item.querySelector("span:nth-child(3)").textContent;
+     
+      pedido += quantidade + " " + nomeProduto + " - " + precoProduto + "\n";
     });
-
+  
     // Adiciona o total do carrinho ao pedido completo
     var totalCarrinho = document.getElementById("total-carrinho").textContent;
     pedido += "\n\n" + totalCarrinho + "\n";
-
+  
     return pedido;
-}
-
-// Função para finalizar o pedido
-function finalizarPedido() {
+  }
+  
+  // Função para finalizar o pedido
+  function finalizarPedido() {
     var observacoes = document.getElementById("observacoes").value;
     // Adicione a lógica para enviar o pedido com as observações pelo WhatsApp ou outro meio desejado
-}
-
-// Adicione um evento de clique ao botão "Finalizar Compra"
-document.querySelector("button").addEventListener("click", function () {
+  }
+  
+  // Adicione um evento de clique ao botão "Finalizar Compra"
+  document.querySelector("button").addEventListener("click", function() {
     mostrarCaixaFlutuante();
-});
-
-// Adicione um evento de input à caixa de texto de observações para ocultar o texto de orientações
-document.getElementById("observacoes").addEventListener("input", function () {
+  });
+  
+  // Adicione um evento de input à caixa de texto de observações para ocultar o texto de orientações
+  document.getElementById("observacoes").addEventListener("input", function() {
     var textoOrientacoes = document.getElementById("texto-orientacoes");
     if (this.value.trim() !== "") {
-        textoOrientacoes.style.display = "none";
+      textoOrientacoes.style.display = "none";
     } else {
-        textoOrientacoes.style.display = "block";
+      textoOrientacoes.style.display = "block";
     }
-});
+  });
 
-// Função para mostrar o modal
+  // Função para mostrar o modal
 function mostrarModal() {
     var modal = document.getElementById("modal");
     modal.style.display = "block";
-
+  
     // Atualiza o pedido completo no modal
     var pedidoCompleto = document.getElementById("pedido-completo");
     pedidoCompleto.textContent = obterPedidoCompleto();
-} 
-  // Função para esconder o modal
-  function esconderModal() {
-    var modal = document.getElementById("modal");
-    modal.style.display = "none";
   }
 
-// Adicione um evento de clique nos radio buttons
-document.getElementById("retirada").addEventListener("click", function () {
+  // Adicione um evento de clique nos radio buttons
+document.getElementById("retirada").addEventListener("click", function() {
     // Oculta o campo de endereço
     document.getElementById("enderecoEntrega").style.display = "none";
 });
 
-document.getElementById("entrega").addEventListener("click", function () {
+document.getElementById("entrega").addEventListener("click", function() {
     // Exibe o campo de endereço
     document.getElementById("enderecoEntrega").style.display = "block";
 });
-
-// Função para mostrar o modal de pedido feito com sucesso
-function mostrarModalPedidoSucesso() {
-    var modalPedidoSucesso = document.getElementById("modalPedidoSucesso");
-    modalPedidoSucesso.style.display = "block";
-  }
-  
-  // Função para fechar o modal de pedido feito com sucesso
-  function fecharModalPedidoSucesso() {
-    var modalPedidoSucesso = document.getElementById("modalPedidoSucesso");
-    modalPedidoSucesso.style.display = "none";
-  }
-  

@@ -50,6 +50,7 @@ h2 {
 
 .heading_container h2 {
   position: relative;
+  margin-top: 40px;
   margin-bottom: 0;
   font-size: 2.5rem;
   font-weight: bold;
@@ -1238,38 +1239,4 @@ button:hover {
 
 .quantidade {
   color: rgb(100, 68, 0);
-}
-
-/* Estilo para o modal de pedido feito com sucesso */
-#modalPedidoSucesso {
-  display: none;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-#modalPedidoSucesso .modal-conteudo {
-  background-color: #fff;
-  margin: 15% auto;
-  padding: 20px;
-  border-radius: 5px;
-}
-
-#modalPedidoSucesso h2 {
-  margin-bottom: 15px; /* Espaçamento abaixo do título */
-}
-
-#modalPedidoSucesso p {
-  margin-bottom: 20px; /* Espaçamento abaixo do parágrafo */
-}
-
-#modalPedidoSucesso button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 3px;
-  cursor: pointer;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 20px;
 }
