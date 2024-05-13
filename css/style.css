@@ -1233,10 +1233,143 @@ button:hover {
   font-family: "Open Sans";
 }
 
-.preco {
-  color: #029c42; 
+.menu {
+  display: flex;
 }
 
-.quantidade {
-  color: rgb(100, 68, 0);
+.coluna {
+  flex: 1;
+  padding: 20px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.item .foto {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+}
+
+.item .foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.item .detalhes {
+  flex: 1;
+  text-align: justify;
+}
+
+.item h3 {
+  margin-top: 0;
+}
+
+.preco {
+  font-weight: bold;
+}
+
+/* Estilo para alternar as cores de fundo */
+.item:nth-child(odd) {
+  background-color: rgb(255, 182, 25); /* Cinza claro */
+}
+
+/* Estilos adicionais para personalização */
+.menu {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.item {
+  border: 2px solid black;
+}
+
+.coluna {
+  margin: 0 10px;
+}
+
+/* Mover a foto para o lado esquerdo */
+.item .foto {
+  order: -1;
+  margin-right: 20px;
+}
+
+#h1Menu {
+  text-align: center;
+}
+
+.fa-shopping-cart {
+  color: rgb(233, 132, 0); 
+  padding-left: 20px;
+  transition: color 0.3s ease;
+}
+
+.preco i:hover {
+  color: #000000; 
+}
+
+.preco {
+  font-weight: bold;
+}
+
+.detalhes h3 {
+  font-weight: bold; 
+}
+
+.detalhes h3,
+.detalhes p:first-of-type {
+    color: white; 
+}
+
+.detalhes > h3:first-of-type,
+.detalhes > p:nth-of-type(2),
+.detalhes > p:nth-of-type(3) {
+    color: black; 
+}
+
+.item .foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 2px solid black; 
+}
+
+.detalhes p {
+  letter-spacing: -1.6px; 
+}
+
+/* Estilos para dispositivos móveis */
+@media only screen and (max-width: 480px) {
+  .coluna {
+    padding: 10px;
+  }
+
+  .item {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .item .foto {
+    width: 100%;
+    height: auto;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .detalhes {
+    text-align: left;
+  }
+
+  .preco {
+    text-align: left;
+  }
 }
