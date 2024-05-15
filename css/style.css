@@ -1348,8 +1348,12 @@ button:hover {
 
 /* Estilos para dispositivos móveis */
 @media only screen and (max-width: 480px) {
+  .menu{
+    display: block;
+  }
+  
   .coluna {
-    padding: 10px;
+    padding: 30px;
   }
 
   .item {
